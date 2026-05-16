@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Plagio - Kit IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">AI</div>
+            <span class="title-font text-xl font-semibold">Kit IA</span>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-home w-5"></i> Inicio
+            </a>
+            <p class="px-4 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Herramientas Pro</p>
+            <a href="prompt-tester.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-flask w-5 text-blue-400"></i> Medidor de Prompts
+            </a>
+            <a href="guides.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-book w-5 text-purple-400"></i> Librería de Guías
+            </a>
+            <a href="templates.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-copy w-5 text-green-400"></i> Plantillas Pro
+            </a>
+            <a href="plagiarism.html" class="flex items-center gap-3 px-4 py-3 bg-gray-800 text-white rounded-xl transition">
+                <i class="fas fa-gavel w-5 text-amber-400"></i> Revisor Anti-Plagio
+            </a>
+            <a href="learn-ai.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-brain w-5 text-emerald-400"></i> Aprender con IA
+            </a>
+            <a href="gemini-tutor.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-robot w-5 text-pink-400"></i> IA Tutor
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+            <h1 class="text-2xl font-semibold title-font">Revisor de Originalidad (Anti-Plagio AI)</h1>
+            <span id="user-display" class="text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full"></span>
+        </header>
+
+        <div class="p-8 max-w-4xl mx-auto w-full">
+            
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <label class="font-semibold text-lg">Pega tu texto aquí para analizarlo</label>
+                    <span class="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full font-bold">Simulador</span>
+                </div>
+                <p class="text-sm text-gray-500 mb-4">Te indicaremos qué probabilidad hay de que Turnitin u otros profesores detecten esto como "generado por IA".</p>
+                
+                <textarea id="text-input" rows="8" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-amber-500 transition resize-none mb-4" placeholder="En conclusión, es imperativo denotar que el tejido social se fundamenta en la amalgama de..."></textarea>
+                
+                <button id="analyze-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-4 rounded-2xl font-bold transition flex items-center justify-center gap-2">
+                    <i class="fas fa-search"></i> Analizar Originalidad
+                </button>
+            </div>
+
+            <!-- Loader -->
+            <div id="loader" class="hidden mt-8 text-center py-12">
+                <div class="w-12 h-12 border-4 border-amber-200 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
+                <p class="text-gray-500 font-medium animate-pulse">Escaneando patrones lingüísticos...</p>
+            </div>
+
+            <!-- Resultados -->
+            <div id="results" class="hidden mt-8 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                <h3 class="text-2xl font-bold title-font text-center mb-8">Reporte de Detección</h3>
+                
+                <div class="flex flex-col md:flex-row items-center gap-8 justify-center mb-8">
+                    <div class="relative w-48 h-48">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f3f4f6" stroke-width="8"></circle>
+                            <circle id="human-circle" cx="50" cy="50" r="40" fill="transparent" stroke="#22c55e" stroke-width="8" stroke-dasharray="251" stroke-dashoffset="0" class="transition-all duration-1000 ease-out"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="human-score" class="text-4xl font-bold text-gray-900">0%</span>
+                            <span class="text-xs font-semibold text-gray-500 uppercase">Humano</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 max-w-sm">
+                        <div id="status-card" class="p-4 rounded-xl border border-green-200 bg-green-50">
+                            <h4 id="status-title" class="font-bold text-green-800 mb-1">¡Excelente trabajo!</h4>
+                            <p id="status-desc" class="text-sm text-green-700">El texto parece haber sido escrito por un humano. Tiene variación de longitud en las oraciones y uso de vocabulario natural.</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                            <h4 class="font-semibold text-gray-700 mb-2 text-sm"><i class="fas fa-robot text-blue-500"></i> Probabilidad de IA: <span id="ai-score" class="font-bold text-red-500">0%</span></h4>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="ai-bar" class="bg-red-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requireAuth(['premium', 'admin']);
+        });
+
+        document.getElementById('analyze-btn').addEventListener('click', () => {
+            const text = document.getElementById('text-input').value.trim();
+            if(!text) {
+                alert("Por favor, ingresa un texto para analizar.");
+                return;
+            }
+
+            // Ocultar resultados y mostrar loader
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('loader').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                
+                // Lógica simulada básica
+                // Si el texto usa palabras rimbombantes típicas de chatgpt, baja score humano
+                const chatGptWords = /en conclusión|es imperativo|en resumen|tejer|amalgama|crucial|fascinante/i;
+                let isLikelyAi = chatGptWords.test(text) || text.length > 200 && text.split('.').every(s => s.length > 50); // oraciones muy largas
+
+                let humanPercent = isLikelyAi ? Math.floor(Math.random() * 30) + 10 : Math.floor(Math.random() * 20) + 80;
+                let aiPercent = 100 - humanPercent;
+
+                // Animar y mostrar resultados
+                document.getElementById('results').classList.remove('hidden');
+                
+                document.getElementById('human-score').textContent = `${humanPercent}%`;
+                document.getElementById('ai-score').textContent = `${aiPercent}%`;
+                
+                // SVG DashOffset Math: 251 es la circunferencia (2*pi*r)
+                const offset = 251 - (251 * humanPercent) / 100;
+                document.getElementById('human-circle').style.strokeDashoffset = offset;
+                
+                const circle = document.getElementById('human-circle');
+                const card = document.getElementById('status-card');
+                const title = document.getElementById('status-title');
+                const desc = document.getElementById('status-desc');
+
+                document.getElementById('ai-bar').style.width = `${aiPercent}%`;
+
+                if(humanPercent >= 70) {
+                    circle.setAttribute('stroke', '#22c55e');
+                    card.className = "p-4 rounded-xl border border-green-200 bg-green-50";
+                    title.className = "font-bold text-green-800 mb-1";
+                    title.textContent = "¡Muy Natural!";
+                    desc.className = "text-sm text-green-700";
+                    desc.textContent = "El texto tiene variaciones lógicas. Es seguro entregarlo.";
+                } else if(humanPercent >= 40) {
+                    circle.setAttribute('stroke', '#f59e0b');
+                    card.className = "p-4 rounded-xl border border-amber-200 bg-amber-50";
+                    title.className = "font-bold text-amber-800 mb-1";
+                    title.textContent = "Cuidado - Mezclado";
+                    desc.className = "text-sm text-amber-700";
+                    desc.textContent = "Hay secciones que suenan robóticas. Te sugerimos reescribir algunos párrafos con tus propias palabras.";
+                } else {
+                    circle.setAttribute('stroke', '#ef4444');
+                    card.className = "p-4 rounded-xl border border-red-200 bg-red-50";
+                    title.className = "font-bold text-red-800 mb-1";
+                    title.textContent = "Alto Riesgo de Detección";
+                    desc.className = "text-sm text-red-700";
+                    desc.textContent = "Usa demasiadas estructuras predecibles de IA. Reformula inmediatamente.";
+                }
+
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidor de Prompts - Kit IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+        .meter-bar { transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">AI</div>
+            <span class="title-font text-xl font-semibold">Kit IA</span>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-home w-5"></i> Inicio
+            </a>
+            
+            <p class="px-4 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Herramientas Pro</p>
+            <a href="prompt-tester.html" class="flex items-center gap-3 px-4 py-3 bg-gray-800 text-white rounded-xl transition">
+                <i class="fas fa-flask w-5 text-blue-400"></i> Medidor de Prompts
+            </a>
+            <a href="guides.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-book w-5 text-purple-400"></i> Librería de Guías
+            </a>
+            <a href="templates.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-copy w-5 text-green-400"></i> Plantillas Pro
+            </a>
+            <a href="plagiarism.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-gavel w-5 text-amber-400"></i> Revisor Anti-Plagio
+            </a>
+            <a href="learn-ai.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-brain w-5 text-emerald-400"></i> Aprender con IA
+            </a>
+            <a href="gemini-tutor.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-robot w-5 text-pink-400"></i> IA Tutor
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-900/30 rounded-xl transition">
+                <i class="fas fa-sign-out-alt w-5"></i> Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+            <h1 class="text-2xl font-semibold title-font">Medidor de Calidad de Prompts</h1>
+            <div class="flex items-center gap-4">
+                <span id="user-display" class="text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full"></span>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Editor -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                    <label class="block font-semibold text-lg mb-2">Escribe tu Prompt aquí</label>
+                    <p class="text-sm text-gray-500 mb-4">La IA analizará tu texto en tiempo real para detectar áreas de mejora.</p>
+                    
+                    <textarea id="prompt-input" rows="8" 
+                              class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition resize-none font-mono text-sm leading-relaxed"
+                              placeholder="Ej: Escribe un ensayo sobre el cambio climático..."></textarea>
+                    
+                    <div class="flex justify-between items-center mt-4 text-sm text-gray-500">
+                        <span id="word-count">0 palabras</span>
+                        <button onclick="document.getElementById('prompt-input').value = ''; analyzePrompt();" class="text-red-500 hover:text-red-700 font-medium">Borrar</button>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100 flex gap-4 items-start">
+                    <div class="w-10 h-10 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center shrink-0">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-blue-900 mb-1">Fórmula del Prompt Perfecto (CREATE)</h4>
+                        <p class="text-sm text-blue-800 leading-relaxed"><b>C</b>ontexto, <b>R</b>ol, <b>E</b>xplicación, <b>A</b>cción, <b>T</b>ono, <b>E</b>structura. Si incluyes estos elementos, la calidad de tu respuesta mejorará drásticamente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Panel -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col">
+                <h3 class="font-semibold text-xl mb-6">Puntuación</h3>
+                
+                <div class="relative w-full h-4 bg-gray-100 rounded-full overflow-hidden mb-2">
+                    <div id="meter-fill" class="meter-bar absolute top-0 left-0 h-full bg-red-500 w-0"></div>
+                </div>
+                <div class="flex justify-between text-sm font-bold mb-8">
+                    <span id="score-text" class="text-red-500">0%</span>
+                    <span id="status-text" class="text-gray-500">Pobre</span>
+                </div>
+
+                <div class="space-y-4 flex-1">
+                    <h4 class="font-medium text-sm text-gray-400 uppercase tracking-wider">Análisis Detallado</h4>
+                    
+                    <div class="flex items-center gap-3">
+                        <div id="check-length" class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs"><i class="fas fa-times"></i></div>
+                        <span class="text-sm text-gray-600">Longitud adecuada (>20 palabras)</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div id="check-role" class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs"><i class="fas fa-times"></i></div>
+                        <span class="text-sm text-gray-600">Rol definido ("actúa como", "eres")</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div id="check-format" class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs"><i class="fas fa-times"></i></div>
+                        <span class="text-sm text-gray-600">Formato esperado ("lista", "ensayo", "tabla")</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div id="check-context" class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs"><i class="fas fa-times"></i></div>
+                        <span class="text-sm text-gray-600">Contexto ("para estudiantes", "en colombia")</span>
+                    </div>
+                </div>
+
+                <div id="feedback-box" class="mt-8 p-4 bg-gray-50 rounded-2xl text-sm text-gray-600 border border-gray-200">
+                    Empieza a escribir para recibir consejos en tiempo real.
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requireAuth(['premium', 'admin']);
+        });
+
+        const input = document.getElementById('prompt-input');
+        input.addEventListener('input', analyzePrompt);
+
+        function updateCheck(id, passed) {
+            const el = document.getElementById(id);
+            if (passed) {
+                el.classList.replace('bg-gray-100', 'bg-green-100');
+                el.classList.replace('text-gray-400', 'text-green-600');
+                el.innerHTML = '<i class="fas fa-check"></i>';
+            } else {
+                el.classList.replace('bg-green-100', 'bg-gray-100');
+                el.classList.replace('text-green-600', 'text-gray-400');
+                el.innerHTML = '<i class="fas fa-times"></i>';
+            }
+            return passed ? 25 : 0;
+        }
+
+        function analyzePrompt() {
+            const text = input.value.trim().toLowerCase();
+            const words = text.split(/\s+/).filter(w => w.length > 0);
+            
+            document.getElementById('word-count').textContent = `${words.length} palabras`;
+
+            let score = 0;
+            
+            // Checks
+            const hasLength = words.length >= 20;
+            const hasRole = /actúa como|eres un|eres una|compórtate como|asume el rol|experto en/.test(text);
+            const hasFormat = /ensayo|lista|tabla|viñetas|párrafos|artículo|resumen|código|markdown/.test(text);
+            const hasContext = /para estudiantes|en colombia|dirigido a|universidad|contexto|teniendo en cuenta|basado en/.test(text);
+
+            score += updateCheck('check-length', hasLength);
+            score += updateCheck('check-role', hasRole);
+            score += updateCheck('check-format', hasFormat);
+            score += updateCheck('check-context', hasContext);
+
+            // Update UI
+            const meterFill = document.getElementById('meter-fill');
+            const scoreText = document.getElementById('score-text');
+            const statusText = document.getElementById('status-text');
+            const feedbackBox = document.getElementById('feedback-box');
+
+            meterFill.style.width = score + '%';
+            scoreText.textContent = score + '%';
+
+            if (score <= 25) {
+                meterFill.className = 'meter-bar absolute top-0 left-0 h-full bg-red-500';
+                scoreText.className = 'text-red-500';
+                statusText.textContent = 'Pobre';
+                feedbackBox.innerHTML = '<b>Consejo:</b> Tu prompt es muy corto o general. Intenta darle una identidad a la IA (ej. "Actúa como experto en...").';
+            } else if (score <= 50) {
+                meterFill.className = 'meter-bar absolute top-0 left-0 h-full bg-orange-400';
+                scoreText.className = 'text-orange-400';
+                statusText.textContent = 'Básico';
+                feedbackBox.innerHTML = '<b>Consejo:</b> Vas por buen camino. Especifica exactamente el formato en el que quieres la respuesta (ej. "en una lista de 5 puntos").';
+            } else if (score <= 75) {
+                meterFill.className = 'meter-bar absolute top-0 left-0 h-full bg-yellow-400';
+                scoreText.className = 'text-yellow-500';
+                statusText.textContent = 'Bueno';
+                feedbackBox.innerHTML = '<b>Consejo:</b> ¡Casi perfecto! Asegúrate de dar más contexto o restricciones (ej. "usa lenguaje sencillo para estudiantes de primer semestre").';
+            } else {
+                meterFill.className = 'meter-bar absolute top-0 left-0 h-full bg-green-500';
+                scoreText.className = 'text-green-500';
+                statusText.textContent = 'Excelente';
+                feedbackBox.innerHTML = '<b>¡Excelente!</b> Este prompt tiene todos los elementos necesarios para obtener una respuesta de alta calidad.';
+            }
+
+            if (text.length === 0) {
+                meterFill.style.width = '0%';
+                scoreText.textContent = '0%';
+                statusText.textContent = '-';
+                feedbackBox.innerHTML = 'Empieza a escribir para recibir consejos en tiempo real.';
+            }
+        }
+    </script>
+</body>
+</html>

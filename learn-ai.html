@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender con IA - Kit IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">AI</div>
+            <span class="title-font text-xl font-semibold">Kit IA</span>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-home w-5"></i> Inicio
+            </a>
+            
+            <div id="premium-menu" class="space-y-2">
+                <p class="px-4 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Herramientas Pro</p>
+                <a href="prompt-tester.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                    <i class="fas fa-flask w-5 text-blue-400"></i> Medidor de Prompts
+                </a>
+                <a href="guides.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                    <i class="fas fa-book w-5 text-purple-400"></i> Librería de Guías
+                </a>
+                <a href="templates.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                    <i class="fas fa-copy w-5 text-green-400"></i> Plantillas Pro
+                </a>
+                <a href="plagiarism.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                    <i class="fas fa-gavel w-5 text-amber-400"></i> Revisor Anti-Plagio
+                </a>
+                <a href="learn-ai.html" class="flex items-center gap-3 px-4 py-3 bg-emerald-600 text-white rounded-xl transition">
+                    <i class="fas fa-brain w-5"></i> Aprender con IA
+                </a>
+                <a href="gemini-tutor.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                    <i class="fas fa-robot w-5 text-pink-400"></i> IA Tutor
+                </a>
+            </div>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logout-btn" class="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-900/30 rounded-xl transition">
+                <i class="fas fa-sign-out-alt w-5"></i> Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+            <h1 class="text-2xl font-semibold title-font">Aprender con IA (Método Socrático)</h1>
+            <div class="flex items-center gap-4">
+                <span id="user-display" class="text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full"></span>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-5xl mx-auto w-full">
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-8 text-white mb-8 shadow-lg">
+                <h2 class="text-3xl font-bold title-font mb-2">No copies y pegues. ¡Aprende!</h2>
+                <p class="text-emerald-100 max-w-2xl text-lg">
+                    El verdadero poder de la IA en la universidad no es darte la respuesta final, sino actuar como el mejor tutor privado del mundo. Te enseñamos cómo configurarla para que te guíe paso a paso.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Columna Izquierda: Teoría Socrática -->
+                <div class="md:col-span-2 space-y-6">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                        <h3 class="text-2xl font-bold title-font mb-6 text-gray-900">Pasos para el aprendizaje profundo</h3>
+                        
+                        <div class="space-y-8">
+                            <!-- Paso 1 -->
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 shrink-0 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl">1</div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Dile tu nivel de conocimiento actual</h4>
+                                    <p class="text-gray-600 mt-1 mb-3">La IA necesita contexto para no hablarte como a un experto ni como a un niño de preescolar.</p>
+                                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-sm font-mono text-gray-700">
+                                        "Soy un estudiante de 3er semestre de Ingeniería. Entiendo los conceptos básicos de cálculo diferencial, pero me cuesta trabajo entender las integrales por partes."
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Paso 2 -->
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 shrink-0 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-bold text-xl">2</div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Pide pistas, no soluciones</h4>
+                                    <p class="text-gray-600 mt-1 mb-3">Pídele que no te resuelva el problema, sino que te dé el primer paso lógico.</p>
+                                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-sm font-mono text-gray-700">
+                                        "Tengo este problema de física: [Problema]. Por favor, no me des la respuesta final. En su lugar, dime cuál es la primera fórmula que debería usar y por qué."
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paso 3 -->
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 shrink-0 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">3</div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Verifica tu entendimiento</h4>
+                                    <p class="text-gray-600 mt-1 mb-3">Después de llegar a una conclusión, explícale a la IA cómo lo entendiste para que corrija tus vacíos.</p>
+                                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-sm font-mono text-gray-700">
+                                        "Entonces, ¿siempre que la fuerza sea constante puedo usar esta ecuación porque la aceleración no cambia? ¿Estoy entendiendo bien?"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Mega-Prompt Socrático -->
+                <div class="space-y-6">
+                    <div class="bg-gray-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 text-gray-800 text-9xl opacity-50"><i class="fas fa-quote-right"></i></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-xl shadow-lg">
+                                    <i class="fas fa-bolt text-white"></i>
+                                </div>
+                                <h3 class="font-bold text-lg">El Mega-Prompt del Tutor</h3>
+                            </div>
+                            <p class="text-sm text-gray-400 mb-6">Copia este prompt y pégalo antes de hacer cualquier pregunta sobre una materia.</p>
+                            
+                            <div class="bg-gray-800 rounded-2xl p-4 mb-6">
+                                <pre class="text-xs text-emerald-300 font-mono whitespace-pre-wrap">Actúa como un profesor universitario experto usando el Método Socrático.
+
+Tu objetivo es que yo entienda el concepto por mi cuenta. NUNCA me des la respuesta directa ni resuelvas el problema completo.
+
+Reglas:
+1. Hazme preguntas para guiar mi razonamiento.
+2. Si me equivoco, señálame el error sutilmente y pídeme que lo intente de nuevo.
+3. Celebra cuando llegue a la conclusión correcta.</pre>
+                            </div>
+                            
+                            <button onclick="copiarPrompt()" id="copy-btn" class="w-full bg-white text-gray-900 hover:bg-gray-100 py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                                <i class="fas fa-copy"></i> Copiar Prompt al Portapapeles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Práctica Interactiva -->
+            <div class="mt-12 bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold title-font text-gray-900">Simulador de Prompts Socráticos</h3>
+                </div>
+                <p class="text-gray-600 mb-6">Escribe un prompt pidiéndole a la IA que te ayude a entender un tema (ej. integrales, leyes de Newton). Intenta aplicar los pasos vistos arriba.</p>
+                <textarea id="practice-prompt" rows="4" class="w-full p-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-emerald-500 mb-4 transition" placeholder="Ejemplo: Soy estudiante de primer semestre. Tengo este problema... No me des la respuesta final, mejor dame pistas..."></textarea>
+                <button id="evaluate-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-medium transition flex items-center gap-2 shadow-sm hover:shadow-md">
+                    <i class="fas fa-magic"></i> Evaluar mi Prompt
+                </button>
+                <div id="feedback-box" class="mt-6 hidden p-5 rounded-2xl text-sm transition-all duration-300"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Solo premium y admin tienen acceso
+            requireAuth(['premium', 'admin']);
+        });
+
+        function copiarPrompt() {
+            const promptText = `Actúa como un profesor universitario experto usando el Método Socrático.\n\nTu objetivo es que yo entienda el concepto por mi cuenta. NUNCA me des la respuesta directa ni resuelvas el problema completo.\n\nReglas:\n1. Hazme preguntas para guiar mi razonamiento.\n2. Si me equivoco, señálame el error sutilmente y pídeme que lo intente de nuevo.\n3. Celebra cuando llegue a la conclusión correcta.`;
+            navigator.clipboard.writeText(promptText);
+            
+            const btn = document.getElementById('copy-btn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-check text-green-500"></i> Copiado Correctamente`;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 3000);
+        }
+
+        // Simulador de Prompts
+        document.getElementById('evaluate-btn').addEventListener('click', () => {
+            const text = document.getElementById('practice-prompt').value.toLowerCase().trim();
+            const feedbackBox = document.getElementById('feedback-box');
+            
+            if (!text) {
+                feedbackBox.classList.remove('hidden');
+                feedbackBox.className = "mt-6 p-5 rounded-2xl text-sm bg-red-50 text-red-600 border border-red-200";
+                feedbackBox.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> Por favor, escribe un prompt primero.';
+                return;
+            }
+
+            feedbackBox.classList.remove('hidden');
+            let score = 0;
+            let missing = [];
+
+            // Check step 1: context
+            if (text.includes('soy') || text.includes('entiendo') || text.includes('estudiante') || text.includes('semestre') || text.includes('nivel') || text.includes('sé que')) {
+                score++;
+            } else {
+                missing.push('Te faltó darle <strong>contexto</strong> sobre tu nivel de conocimiento actual.');
+            }
+
+            // Check step 2: hints
+            if (text.includes('pistas') || text.includes('no me des la respuesta') || text.includes('paso a paso') || text.includes('guíame') || text.includes('explícame') || text.includes('cómo empiezo')) {
+                score++;
+            } else {
+                missing.push('Te faltó pedirle explícitamente que <strong>no te resuelva</strong> el problema directo y que te dé pistas.');
+            }
+
+            if (score === 2) {
+                feedbackBox.className = "mt-6 p-5 rounded-2xl text-sm bg-emerald-50 text-emerald-800 border border-emerald-200";
+                feedbackBox.innerHTML = '<div class="flex items-center gap-2 mb-2 font-bold text-lg text-emerald-600"><i class="fas fa-star"></i> ¡Excelente Prompt!</div>Has aplicado correctamente el contexto y le has pedido que actúe como tutor. ¡Ya estás listo para usar el IA Tutor real!';
+            } else {
+                feedbackBox.className = "mt-6 p-5 rounded-2xl text-sm bg-amber-50 text-amber-800 border border-amber-200";
+                feedbackBox.innerHTML = '<div class="flex items-center gap-2 mb-2 font-bold text-lg text-amber-600"><i class="fas fa-lightbulb"></i> Buen intento, pero puede mejorar:</div><ul class="list-disc pl-5 space-y-1">' + missing.map(m => `<li>${m}</li>`).join('') + '</ul>';
+            }
+        });
+    </script>
+</body>
+</html>

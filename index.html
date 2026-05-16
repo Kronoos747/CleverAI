@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kit IA Estratégica • Estudiantes Universitarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+        .hero-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .prompt-card {
+            position: relative;
+        }
+        .copy-btn {
+            transition: all 0.2s;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- NAV -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">AI</div>
+                <div>
+                    <span class="title-font text-2xl font-semibold tracking-tighter">Kit IA Estratégica</span>
+                    <p class="text-xs text-gray-500 -mt-1">para universitarios</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#inicio" class="hover:text-blue-600 transition">Inicio</a>
+                <a href="#herramientas" class="hover:text-blue-600 transition">Herramientas</a>
+                <a href="#prompts" class="hover:text-blue-600 transition">Recursos</a>
+                <a href="#etica" class="hover:text-blue-600 transition">Ética</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="login.html" id="nav-login-btn"
+                   class="text-blue-600 font-medium px-4 py-2 hover:bg-blue-50 rounded-2xl transition">
+                    Iniciar Sesión
+                </a>
+                <a href="register.html" id="nav-reg-btn"
+                   class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-medium flex items-center gap-2 transition">
+                    Úsalo ahora
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="inicio" class="hero-bg text-white">
+        <div class="max-w-7xl mx-auto px-6 pt-24 pb-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-white/20 text-white text-sm px-4 py-2 rounded-3xl mb-6">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                        Bucaramanga • Disponible ahora
+                    </div>
+                    <h1 class="title-font text-6xl font-bold leading-none tracking-tighter mb-6">
+                        Tu kit digital de IA<br>para triunfar en la universidad
+                    </h1>
+                    <p class="text-xl text-blue-100 max-w-lg mb-10">
+                        Guías prácticas, prompts listos para usar, plantillas y reglas éticas. 
+                        Reduce tu tiempo de estudio en un 70% y entrega trabajos de mayor calidad.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="register.html" 
+                           class="bg-white text-blue-700 px-8 py-4 rounded-2xl font-semibold flex items-center gap-3 hover:scale-105 transition shadow-lg">
+                            <i class="fas fa-rocket"></i> Empezar a usarlo ahora
+                        </a>
+                        <a href="#herramientas" 
+                           class="border border-white/50 text-white px-8 py-4 rounded-2xl font-medium hover:bg-white/10 transition">
+                            Ver herramientas
+                        </a>
+                    </div>
+                    <div class="mt-12 flex items-center gap-8 text-sm">
+                        <div class="flex -space-x-4">
+                            <div class="w-8 h-8 bg-white rounded-2xl flex items-center justify-center text-blue-600 font-bold">M</div>
+                            <div class="w-8 h-8 bg-white rounded-2xl flex items-center justify-center text-blue-600 font-bold">A</div>
+                            <div class="w-8 h-8 bg-white rounded-2xl flex items-center justify-center text-blue-600 font-bold">J</div>
+                        </div>
+                        <div>
+                            <p class="text-blue-100">Creado por</p>
+                            <p class="font-medium">Matthew Agudelo, Angela Mejía y Juan Herrera</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl p-8 shadow-2xl">
+                        <div class="bg-white rounded-2xl p-6 text-gray-900">
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-graduation-cap text-3xl text-blue-600"></i>
+                                    <div>
+                                        <p class="font-semibold">Trabajo de Investigación</p>
+                                        <p class="text-xs text-gray-500">Generado en 4 minutos</p>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-xl font-medium">Aprobado por docente</span>
+                            </div>
+                            <div class="space-y-4 text-sm">
+                                <div class="flex gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+                                    <div>Prompt optimizado → Estructura completa</div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+                                    <div>Plantilla aplicada → Referencias automáticas</div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+                                    <div>Revisión ética → 100% original</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-white p-5 rounded-3xl shadow-xl max-w-[220px]">
+                        <p class="text-xs text-gray-500 mb-2">Estudiantes que ya lo usan:</p>
+                        <div class="flex items-center gap-2 text-lg font-semibold">
+                            <span class="text-green-500">+87</span> 
+                            <span class="text-gray-400">en Bucaramanga</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- QUIÉNES SOMOS / PROPUESTA DE VALOR -->
+    <section class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="col-span-2">
+                    <h2 class="title-font text-4xl font-semibold mb-4">¿Qué es el Kit IA Estratégica?</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        Un kit digital completo (guía + página web interactiva) creado especialmente para estudiantes universitarios de Bucaramanga. 
+                        Te enseñamos a usar herramientas de IA (ChatGPT, Grok, Claude, Gemini, etc.) de forma inteligente, rápida y 100% ética.
+                    </p>
+                    <div class="mt-8 grid grid-cols-2 gap-6">
+                        <div class="flex gap-4">
+                            <i class="fas fa-clock text-3xl text-blue-600 mt-1"></i>
+                            <div>
+                                <p class="font-semibold">Ahorra tiempo</p>
+                                <p class="text-sm text-gray-500">Reduce hasta 70% el tiempo de investigación y redacción</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <i class="fas fa-star text-3xl text-blue-600 mt-1"></i>
+                            <div>
+                                <p class="font-semibold">Mejores notas</p>
+                                <p class="text-sm text-gray-500">Trabajos más profundos, coherentes y profesionales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-8 rounded-3xl flex flex-col justify-center">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-shield-alt text-5xl"></i>
+                    </div>
+                    <p class="font-semibold text-lg">Enfoque ético incluido</p>
+                    <p class="text-gray-600 text-sm mt-2">
+                        Nunca más te preocupes por plagio. Te damos reglas claras y plantillas que respetan las normas académicas de tu universidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HERRAMIENTAS INTERACTIVAS -->
+    <section id="herramientas" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-3xl text-sm font-medium">NUEVA PLATAFORMA SAAS</span>
+                <h2 class="title-font text-4xl font-semibold mt-4">Pasa de la teoría a la práctica con nuestras herramientas</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Herramienta 1 -->
+                <div class="bg-white rounded-3xl p-8 card-hover border border-gray-100 shadow-sm flex flex-col">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-flask"></i></div>
+                    <h3 class="font-semibold text-xl mb-3">Medidor de Prompts</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-1">
+                        Algoritmo en tiempo real que evalúa qué tan bueno es tu prompt usando la fórmula secreta CREATE. Te decimos exactamente qué le falta antes de que lo envíes.
+                    </p>
+                    <a href="register.html" class="mt-4 w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-4 rounded-2xl font-medium flex items-center justify-center transition">
+                        Úsalo ahora
+                    </a>
+                </div>
+
+                <!-- Herramienta 2 -->
+                <div class="bg-white rounded-3xl p-8 card-hover border border-gray-100 shadow-sm flex flex-col">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-gavel"></i></div>
+                    <h3 class="font-semibold text-xl mb-3">Simulador Anti-Plagio</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-1">
+                        ¿Miedo a que el profesor use Turnitin? Pega tu texto en nuestro simulador y descubre la probabilidad de que sea detectado como IA.
+                    </p>
+                    <a href="register.html" class="mt-4 w-full bg-amber-50 hover:bg-amber-100 text-amber-700 py-4 rounded-2xl font-medium flex items-center justify-center transition">
+                        Úsalo ahora
+                    </a>
+                </div>
+
+                <!-- Herramienta 3 -->
+                <div class="bg-white rounded-3xl p-8 card-hover border border-gray-100 shadow-sm flex flex-col">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-6"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="font-semibold text-xl mb-3">Plantillas y Guías Pro</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-1">
+                        Accede a nuestro dashboard premium con módulos interactivos para estructurar tu tesis, analizar datos de Excel y citar IA en APA 7.
+                    </p>
+                    <a href="register.html" class="mt-4 w-full bg-purple-50 hover:bg-purple-100 text-purple-700 py-4 rounded-2xl font-medium flex items-center justify-center transition">
+                        Úsalo ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMPTS OPTIMIZADOS -->
+    <section id="prompts" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <span class="px-4 py-2 bg-amber-100 text-amber-700 rounded-3xl text-sm font-medium">PROMPTS LISTOS</span>
+                    <h2 class="title-font text-4xl font-semibold mt-3">Estructuras y ejemplos de prompts</h2>
+                </div>
+                <p class="text-gray-500 max-w-xs">Copia y pega directamente en ChatGPT, Grok o cualquier IA</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Prompt 1 -->
+                <div class="prompt-card bg-gray-900 text-white rounded-3xl p-8">
+                    <div class="flex justify-between">
+                        <div class="px-4 py-1 bg-white/10 text-xs rounded-2xl">Investigación</div>
+                        <button onclick="copiarPrompt(this)" 
+                                class="copy-btn text-xs bg-white/10 hover:bg-white/20 px-5 py-2 rounded-2xl flex items-center gap-2">
+                            <i class="fas fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <pre class="mt-8 text-sm leading-relaxed overflow-auto max-h-64 text-amber-300 font-mono">Actúa como investigador senior de la Universidad Industrial de Santander (UIS). 
+Tema: [INSERTE TU TEMA AQUÍ]
+Objetivo: Crear un marco teórico de 800 palabras con al menos 8 referencias académicas reales (APA 7).
+Incluye:
+1. Historia breve del concepto
+2. Autores clave
+3. Debates actuales
+4. Aplicación en Colombia
+5. 3 preguntas de investigación futuras
+Responde solo con el texto académico, sin introducciones.</pre>
+                </div>
+
+                <!-- Prompt 2 -->
+                <div class="prompt-card bg-gray-900 text-white rounded-3xl p-8">
+                    <div class="flex justify-between">
+                        <div class="px-4 py-1 bg-white/10 text-xs rounded-2xl">Redacción</div>
+                        <button onclick="copiarPrompt(this)" 
+                                class="copy-btn text-xs bg-white/10 hover:bg-white/20 px-5 py-2 rounded-2xl flex items-center gap-2">
+                            <i class="fas fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <pre class="mt-8 text-sm leading-relaxed overflow-auto max-h-64 text-amber-300 font-mono">Eres profesor titular de la Universidad Autónoma de Bucaramanga (UNAB). 
+Escribe un ensayo argumentativo de 1200 palabras sobre: [TEMA]
+Estructura obligatoria:
+- Introducción con gancho y tesis clara
+- 3 argumentos con evidencia
+- Contraargumento y refutación
+- Conclusión con llamada a acción
+Usa lenguaje formal, citas APA y evita repeticiones. Nivel: pregrado.</pre>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <button onclick="alert('¡Biblioteca completa de 35 prompts descargada!')" 
+                        class="bg-black text-white px-10 py-5 rounded-3xl font-medium inline-flex items-center gap-3 text-lg">
+                    <i class="fas fa-arrow-down"></i> 
+                    Descargar los 35 prompts (Google Drive)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANTILLAS -->
+    <section id="plantillas" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="title-font text-4xl font-semibold text-center mb-12">Plantillas listas para copiar</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-3xl overflow-hidden border">
+                    <div class="bg-emerald-600 text-white px-6 py-4 font-medium flex items-center gap-2">
+                        <i class="fas fa-file-alt"></i> ESTRUCTURA DE ENSAYO
+                    </div>
+                    <div class="p-8 text-sm font-mono leading-relaxed">
+                        1. Introducción (15%)<br>
+                        2. Desarrollo (70%)<br>
+                        &nbsp;&nbsp;2.1 Argumento 1<br>
+                        &nbsp;&nbsp;2.2 Argumento 2<br>
+                        &nbsp;&nbsp;2.3 Contraargumento<br>
+                        3. Conclusión (15%)<br>
+                        Referencias (APA 7)
+                    </div>
+                    <button onclick="navigator.clipboard.writeText('1. Introducción...');alert('Plantilla copiada al portapapeles!')" 
+                            class="w-full py-5 bg-emerald-50 text-emerald-700 font-medium">Copiar plantilla</button>
+                </div>
+
+                <div class="bg-white rounded-3xl overflow-hidden border">
+                    <div class="bg-rose-600 text-white px-6 py-4 font-medium flex items-center gap-2">
+                        <i class="fas fa-list-check"></i> RESUMEN EJECUTIVO
+                    </div>
+                    <div class="p-8 text-sm font-mono leading-relaxed">
+                        Objetivo:<br>
+                        Metodología:<br>
+                        Resultados principales:<br>
+                        Conclusiones:<br>
+                        Recomendaciones:
+                    </div>
+                    <button onclick="navigator.clipboard.writeText('Objetivo:...');alert('Plantilla copiada al portapapeles!')" 
+                            class="w-full py-5 bg-rose-50 text-rose-700 font-medium">Copiar plantilla</button>
+                </div>
+
+                <div class="bg-white rounded-3xl overflow-hidden border">
+                    <div class="bg-indigo-600 text-white px-6 py-4 font-medium flex items-center gap-2">
+                        <i class="fas fa-chart-bar"></i> PRESENTACIÓN POWERPOINT
+                    </div>
+                    <div class="p-8 text-sm font-mono leading-relaxed">
+                        Slide 1: Portada<br>
+                        Slide 2: Problema<br>
+                        Slide 3-6: Desarrollo<br>
+                        Slide 7: Resultados<br>
+                        Slide 8: Conclusiones<br>
+                        Slide 9: Preguntas
+                    </div>
+                    <button onclick="navigator.clipboard.writeText('Slide 1:...');alert('Plantilla copiada al portapapeles!')" 
+                            class="w-full py-5 bg-indigo-50 text-indigo-700 font-medium">Copiar plantilla</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ÉTICA -->
+    <section id="etica" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="px-4 py-2 bg-red-100 text-red-700 rounded-3xl text-sm font-medium">COMPROMISO ÉTICO</span>
+                <h2 class="title-font text-4xl font-semibold mt-4">Lineamientos de uso responsable</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-8 text-lg">
+                <div class="flex gap-6">
+                    <div class="text-4xl text-red-500">①</div>
+                    <div>
+                        <p class="font-semibold">Nunca entregues trabajo 100% generado por IA</p>
+                        <p class="text-gray-600 mt-2">Usa IA solo como asistente. Siempre revisa y modifica con tu voz.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="text-4xl text-red-500">②</div>
+                    <div>
+                        <p class="font-semibold">Cita el uso de IA</p>
+                        <p class="text-gray-600 mt-2">Ejemplo: “Se utilizó Grok (xAI) para generar borrador inicial”</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="text-4xl text-red-500">③</div>
+                    <div>
+                        <p class="font-semibold">Verifica siempre las fuentes</p>
+                        <p class="text-gray-600 mt-2">La IA puede alucinar. Confirma cada dato.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="text-4xl text-red-500">④</div>
+                    <div>
+                        <p class="font-semibold">Respeta las normas de tu universidad</p>
+                        <p class="text-gray-600 mt-2">Consulta el reglamento de plagio de UIS, UNAB, etc.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center bg-red-50 border border-red-200 p-10 rounded-3xl">
+                <p class="text-red-700 font-medium text-xl">“El Kit IA Estratégica está diseñado para potenciar tu aprendizaje, no reemplazarlo.”</p>
+                <p class="text-red-600 mt-4">— Matthew, Angela y Juan</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCESO / MONETIZACIÓN -->
+    <section id="acceso" class="py-24 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+        <div class="max-w-6xl mx-auto text-center px-6">
+            <h2 class="title-font text-5xl font-bold mb-6">Elige tu plan de estudio</h2>
+            <p class="text-xl mb-12">Invierte en tu futuro académico. Acceso inmediato al confirmar tu registro.</p>
+            
+            <div class="grid md:grid-cols-3 gap-6 text-gray-900">
+                <!-- Opción gratuita -->
+                <div class="bg-white rounded-3xl p-8 flex flex-col justify-between hover:scale-105 transition shadow-xl">
+                    <div>
+                        <div class="text-xl font-semibold mb-2 text-blue-600">Plan Básico</div>
+                        <div class="text-5xl font-bold mb-6">$0</div>
+                        <p class="text-sm text-gray-500 mb-6 border-b pb-4">Ideal para probar la plataforma.</p>
+                        <ul class="text-left space-y-4 text-sm font-medium">
+                            <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Dashboard gratuito</li>
+                            <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Opción para canjear códigos</li>
+                            <li class="flex gap-2 text-gray-400"><i class="fas fa-times mt-1"></i> Medidor de Prompts</li>
+                            <li class="flex gap-2 text-gray-400"><i class="fas fa-times mt-1"></i> Plantillas Pro</li>
+                        </ul>
+                    </div>
+                    <a href="register.html" class="mt-8 bg-gray-100 text-gray-900 hover:bg-gray-200 py-4 rounded-2xl font-bold transition w-full block text-center">Registrarme Ahora</a>
+                </div>
+                
+                <!-- Opción Paquetes -->
+                <div class="bg-white rounded-3xl p-8 flex flex-col justify-between hover:scale-105 transition shadow-xl border-4 border-emerald-300 relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-400 text-emerald-900 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+                        Pago Único
+                    </div>
+                    <div>
+                        <div class="text-xl font-semibold mb-2 text-emerald-600">Paquete Descargas</div>
+                        <div class="text-5xl font-bold mb-6">$25.000</div>
+                        <p class="text-sm text-gray-500 mb-6 border-b pb-4">Archivos para toda la vida.</p>
+                        <ul class="text-left space-y-4 text-sm font-medium">
+                            <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Todas las Guías (PDF)</li>
+                            <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Plantillas Editables (DOCX)</li>
+                            <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> 35 Prompts (TXT)</li>
+                            <li class="flex gap-2 text-gray-400"><i class="fas fa-times mt-1"></i> Herramientas interactivas</li>
+                        </ul>
+                    </div>
+                    <a href="checkout.html?type=onetime" class="mt-8 bg-emerald-500 text-white hover:bg-emerald-600 py-4 rounded-2xl font-bold transition w-full block text-center">Comprar Paquete</a>
+                </div>
+
+                <!-- Opción Premium -->
+                <div class="bg-gray-900 text-white rounded-3xl p-8 flex flex-col justify-between hover:scale-105 transition shadow-2xl relative transform md:-translate-y-4 border border-gray-700">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+                        Recomendado
+                    </div>
+                    <div>
+                        <div class="text-xl font-semibold mb-2 text-blue-400">Premium Mensual</div>
+                        <div class="text-5xl font-bold mb-6">$15.000<span class="text-lg text-gray-500 font-normal">/mes</span></div>
+                        <p class="text-sm text-gray-400 mb-6 border-b border-gray-700 pb-4">La suite completa e interactiva.</p>
+                        <ul class="text-left space-y-4 text-sm font-medium">
+                            <li class="flex gap-2"><i class="fas fa-check text-blue-400 mt-1"></i> Medidor de Prompts (Ilimitado)</li>
+                            <li class="flex gap-2"><i class="fas fa-check text-blue-400 mt-1"></i> Revisor Anti-Plagio</li>
+                            <li class="flex gap-2"><i class="fas fa-check text-blue-400 mt-1"></i> Librería de Guías Online</li>
+                            <li class="flex gap-2"><i class="fas fa-check text-blue-400 mt-1"></i> Soporte Prioritario</li>
+                        </ul>
+                    </div>
+                    <a href="checkout.html?type=premium" class="mt-8 bg-blue-600 text-white hover:bg-blue-500 py-4 rounded-2xl font-bold transition w-full block text-center">Suscribirme Ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl">AI</div>
+                    <span class="title-font text-3xl font-semibold">Kit IA Estratégica</span>
+                </div>
+                <p class="text-gray-400 text-sm">Bucaramanga, Colombia<br>2026</p>
+            </div>
+            <div>
+                <p class="uppercase text-xs tracking-widest mb-4">Creadores</p>
+                <p class="text-sm">Matthew Agudelo<br>Angela Mejía<br>Juan Herrera</p>
+            </div>
+            <div>
+                <p class="uppercase text-xs tracking-widest mb-4">Canales</p>
+                <p class="text-sm space-y-2">
+                    WhatsApp • Instagram • LinkedIn<br>
+                    Correo: kitiaestrategica@gmail.com
+                </p>
+            </div>
+            <div>
+                <p class="uppercase text-xs tracking-widest mb-4">Legal</p>
+                <p class="text-xs text-gray-400">Este proyecto es una simulación real creada por Grok para demostrar el potencial del emprendimiento estudiantil. ¡Úsalo con responsabilidad!</p>
+            </div>
+        </div>
+        <div class="text-center text-xs text-gray-500 mt-16">
+            © 2026 Kit IA Estratégica • Hecho con ❤️ en Colombia
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script ya cargado
+        function copiarPrompt(btn) {
+            const pre = btn.parentElement.parentElement.querySelector('pre');
+            navigator.clipboard.writeText(pre.textContent);
+            const original = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-check"></i> ¡Copiado!`;
+            setTimeout(() => {
+                btn.innerHTML = original;
+            }, 2000);
+        }
+
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Mensaje de bienvenida
+        console.log('%c✅ Kit IA Estratégica cargado correctamente. ¡Bienvenido, futuro líder universitario!', 'color:#3b82f6; font-family:monospace');
+    </script>
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Actualizar navbar si hay sesión
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = getCurrentUser();
+            if (user) {
+                const btn = document.getElementById('nav-login-btn');
+                const regBtn = document.getElementById('nav-reg-btn');
+                
+                btn.classList.add('hidden');
+                
+                regBtn.innerHTML = `<i class="fas fa-columns"></i> Ir al Dashboard`;
+                if (user.type === 'admin') regBtn.href = 'admin.html';
+                else if (user.type === 'onetime') regBtn.href = 'downloads.html';
+                else regBtn.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

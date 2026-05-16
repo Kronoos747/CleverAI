@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Kit IA Estratégica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav class="bg-white border-b py-4">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">AI</div>
+                <span class="title-font text-2xl font-semibold tracking-tighter">Pasarela de Pago Segura</span>
+            </a>
+            <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-blue-600"><i class="fas fa-times"></i> Cancelar</a>
+        </div>
+    </nav>
+
+    <main class="flex-1 flex justify-center py-12 px-6">
+        <div class="max-w-4xl w-full grid md:grid-cols-2 gap-8">
+            
+            <!-- Resumen de Compra -->
+            <div>
+                <h2 class="text-xl font-bold mb-4">Resumen de tu compra</h2>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 id="plan-name" class="font-bold text-lg">Cargando Plan...</h3>
+                            <p id="plan-desc" class="text-sm text-gray-500">...</p>
+                        </div>
+                        <div id="plan-price" class="text-xl font-bold text-blue-600">$0</div>
+                    </div>
+                    
+                    <ul id="plan-features" class="space-y-3 mt-6 text-sm text-gray-600 border-t pt-6">
+                        <!-- Generado por JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Formulario de Pago -->
+            <div>
+                <h2 class="text-xl font-bold mb-4">Detalles de Pago</h2>
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                    <form id="checkout-form" class="space-y-5">
+                        
+                        <!-- Si el usuario no está logueado, pedir crear cuenta -->
+                        <div id="account-section" class="space-y-4 mb-6 pb-6 border-b">
+                            <h3 class="font-semibold text-sm uppercase text-gray-500">1. Crea tu cuenta</h3>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                                <input type="text" id="name" required class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                                <input type="email" id="email" required class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                                <input type="password" id="password" required minlength="4" class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Confirmar Contraseña</label>
+                                <input type="password" id="confirm-password" required minlength="4" class="w-full px-4 py-3 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta Simualda -->
+                        <div class="space-y-4">
+                            <h3 class="font-semibold text-sm uppercase text-gray-500">2. Método de pago</h3>
+                            <div class="p-4 bg-blue-50 text-blue-800 rounded-xl text-sm mb-4 border border-blue-100 flex items-center gap-3">
+                                <i class="fas fa-info-circle text-xl"></i>
+                                <span>Este es un simulador. Puedes hacer clic en "Completar Pago" directamente, no se te cobrará nada.</span>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Número de Tarjeta (Ficticio)</label>
+                                <input type="text" value="4111 1111 1111 1111" class="w-full px-4 py-3 rounded-2xl border border-gray-300 text-gray-500 bg-gray-50 outline-none" readonly>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Vencimiento</label>
+                                    <input type="text" value="12/28" class="w-full px-4 py-3 rounded-2xl border border-gray-300 text-gray-500 bg-gray-50 outline-none" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                                    <input type="text" value="123" class="w-full px-4 py-3 rounded-2xl border border-gray-300 text-gray-500 bg-gray-50 outline-none" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="error-msg" class="hidden text-sm text-red-500 mt-2 font-medium"></div>
+
+                        <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 py-4 rounded-2xl font-bold transition flex items-center justify-center gap-2 mt-6">
+                            <i class="fas fa-lock"></i> Completar Pago
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal Procesando -->
+    <div id="processing-modal" class="fixed inset-0 bg-white/90 flex flex-col items-center justify-center hidden z-50">
+        <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+        <h2 class="text-xl font-bold">Procesando pago simulado...</h2>
+        <p class="text-gray-500">Generando tu código de acceso.</p>
+    </div>
+
+    <!-- Modal Éxito -->
+    <div id="success-modal" class="fixed inset-0 bg-gray-900/50 flex flex-col items-center justify-center hidden z-50 p-4">
+        <div class="bg-white p-10 rounded-3xl text-center max-w-md w-full shadow-2xl">
+            <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">¡Pago Exitoso!</h2>
+            <p class="text-gray-600 mb-6">Tu cuenta ha sido creada y actualizada. Serás redirigido a tu panel en 3 segundos.</p>
+            <div class="text-sm bg-gray-50 p-4 rounded-xl border border-gray-200 text-left">
+                <p><strong>Guardado automático:</strong> Se te asignó el plan <span id="success-type" class="font-bold"></span>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const planType = urlParams.get('type') || 'premium';
+        const packageId = urlParams.get('packageId');
+
+        // Configurar UI según plan
+        if (planType === 'premium') {
+            document.getElementById('plan-name').textContent = 'Plan Premium (Mensual)';
+            document.getElementById('plan-desc').textContent = 'Acceso total e interactivo';
+            document.getElementById('plan-price').textContent = '$15.000';
+            document.getElementById('plan-features').innerHTML = `
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Medidor de Prompts Interactivo</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Simulador Anti-Plagio</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Librería online y Plantillas pro</li>
+            `;
+        } else if (planType === 'package') {
+            // Un paquete individual
+            document.getElementById('plan-name').textContent = 'Paquete Individual';
+            document.getElementById('plan-desc').textContent = 'Pago único por este recurso';
+            document.getElementById('plan-price').textContent = '$10.000';
+            document.getElementById('plan-features').innerHTML = `
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Descarga para toda la vida</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Actualizaciones incluidas</li>
+            `;
+        }
+
+        // Si el usuario ya está logueado, ocultar sección de cuenta y usar ese email
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            document.getElementById('account-section').innerHTML = `
+                <h3 class="font-semibold text-sm uppercase text-gray-500 mb-4">1. Tu cuenta</h3>
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold">${currentUser.name}</p>
+                        <p class="text-sm text-gray-600">${currentUser.email}</p>
+                    </div>
+                    <i class="fas fa-check-circle text-blue-500 text-2xl"></i>
+                </div>
+            `;
+        }
+
+        document.getElementById('checkout-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            document.getElementById('processing-modal').classList.remove('hidden');
+
+            setTimeout(() => {
+                let userEmail = null;
+                let userPass = null;
+                let userName = null;
+
+                if (currentUser) {
+                    userEmail = currentUser.email;
+                } else {
+                    userName = document.getElementById('name').value;
+                    userEmail = document.getElementById('email').value;
+                    userPass = document.getElementById('password').value;
+                    const confirmPass = document.getElementById('confirm-password').value;
+                    
+                    if (userPass !== confirmPass) {
+                        document.getElementById('processing-modal').classList.add('hidden');
+                        const err = document.getElementById('error-msg');
+                        err.textContent = "Las contraseñas no coinciden.";
+                        err.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    const newUser = registerUser(userName, userEmail, userPass);
+                    if (!newUser) {
+                        document.getElementById('processing-modal').classList.add('hidden');
+                        const err = document.getElementById('error-msg');
+                        err.textContent = "El correo ya está registrado. Por favor, inicia sesión primero.";
+                        err.classList.remove('hidden');
+                        return;
+                    }
+                    loginUser(newUser); // Auto-login
+                }
+
+                // Generar el código y redimirlo automáticamente
+                const code = generateCode(planType, packageId);
+                redeemCode(userEmail, code);
+
+                document.getElementById('processing-modal').classList.add('hidden');
+                document.getElementById('success-type').textContent = planType.toUpperCase();
+                document.getElementById('success-modal').classList.remove('hidden');
+
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 3000);
+
+            }, 2000);
+        });
+
+    </script>
+</body>
+</html>

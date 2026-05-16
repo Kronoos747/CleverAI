@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guías - Kit IA Estratégica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">AI</div>
+            <span class="title-font text-xl font-semibold">Kit IA</span>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-home w-5"></i> Inicio
+            </a>
+            
+            <p class="px-4 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Herramientas Pro</p>
+            <a href="prompt-tester.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-flask w-5 text-blue-400"></i> Medidor de Prompts
+            </a>
+            <a href="guides.html" class="flex items-center gap-3 px-4 py-3 bg-gray-800 text-white rounded-xl transition">
+                <i class="fas fa-book w-5 text-purple-400"></i> Librería de Guías
+            </a>
+            <a href="templates.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-copy w-5 text-green-400"></i> Plantillas Pro
+            </a>
+            <a href="plagiarism.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-gavel w-5 text-amber-400"></i> Revisor Anti-Plagio
+            </a>
+            <a href="learn-ai.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-brain w-5 text-emerald-400"></i> Aprender con IA
+            </a>
+            <a href="gemini-tutor.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-robot w-5 text-pink-400"></i> IA Tutor
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+            <h1 class="text-2xl font-semibold title-font">Librería de Guías</h1>
+            <span id="user-display" class="text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full"></span>
+        </header>
+
+        <div class="p-8 max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Menu de Lecciones -->
+            <div class="space-y-4">
+                <h2 class="font-bold text-gray-500 uppercase tracking-wider text-sm mb-4">Módulos Disponibles</h2>
+                
+                <div onclick="showLesson('tesis')" class="cursor-pointer bg-white p-4 rounded-2xl shadow-sm border-l-4 border-purple-500 hover:shadow-md transition">
+                    <h3 class="font-semibold text-gray-900">IA para Tesis</h3>
+                    <p class="text-xs text-gray-500 mt-1">Estructura tu marco teórico en minutos.</p>
+                </div>
+                
+                <div onclick="showLesson('datos')" class="cursor-pointer bg-white p-4 rounded-2xl shadow-sm border-l-4 border-transparent hover:border-blue-500 hover:shadow-md transition">
+                    <h3 class="font-semibold text-gray-900">Análisis de Datos</h3>
+                    <p class="text-xs text-gray-500 mt-1">Saca conclusiones de tus encuestas y Excel.</p>
+                </div>
+                
+                <div onclick="showLesson('etica')" class="cursor-pointer bg-white p-4 rounded-2xl shadow-sm border-l-4 border-transparent hover:border-red-500 hover:shadow-md transition">
+                    <h3 class="font-semibold text-gray-900">Uso Ético y Citas</h3>
+                    <p class="text-xs text-gray-500 mt-1">Cómo citar a ChatGPT en formato APA 7.</p>
+                </div>
+            </div>
+
+            <!-- Contenido de Lección -->
+            <div class="md:col-span-2">
+                <div id="lesson-content" class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 min-h-[500px]">
+                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold title-font mb-4">Módulo 1: IA para Tesis y Proyectos de Grado</h2>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        El error más común al usar Inteligencia Artificial para trabajos académicos largos es pedirle a la IA que "escriba todo de una vez". Esto resulta en textos repetitivos, superficiales y fácilmente detectables.
+                    </p>
+                    <h3 class="text-xl font-bold mb-3">La Estrategia de Bloques</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Debes dividir tu tesis en componentes pequeños. Pídele a la IA que actúe como un tutor o investigador senior. Usa este flujo:
+                        <br><br>
+                        1. <b>Lluvia de ideas:</b> "Genera 5 posibles problemas de investigación sobre [tema] en el contexto de Colombia."<br>
+                        2. <b>Estructura:</b> "Basado en el problema X, crea un índice detallado usando la estructura IMRaD."<br>
+                        3. <b>Desarrollo por sección:</b> "Escribe solo la introducción. Incluye un gancho, el contexto general y termina con la hipótesis."
+                    </p>
+                    <div class="bg-purple-50 border border-purple-100 p-6 rounded-2xl">
+                        <h4 class="font-semibold text-purple-900 mb-2">Prompt de Ejemplo</h4>
+                        <code class="text-sm text-purple-800 font-mono block">
+                            "Actúa como un metodólogo experto. Revisa el siguiente título de tesis y dime si cumple con los criterios FINER (Factible, Interesante, Novedoso, Ético, Relevante). Título: [TU TÍTULO]"
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requireAuth(['premium', 'admin']);
+        });
+
+        const lessons = {
+            tesis: `
+                <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h2 class="text-3xl font-bold title-font mb-4">Módulo 1: IA para Tesis y Proyectos de Grado</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">El error más común al usar IA para trabajos largos es pedirle que "escriba todo de una vez". Esto resulta en textos repetitivos.</p>
+                <h3 class="text-xl font-bold mb-3">La Estrategia de Bloques</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">Divide tu tesis en componentes pequeños: Ideas > Estructura > Sección por sección.</p>
+            `,
+            datos: `
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h2 class="text-3xl font-bold title-font mb-4">Módulo 2: Análisis de Datos con IA</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">¿Hiciste una encuesta en Google Forms y no sabes cómo tabularla? ChatGPT Plus y Claude pueden analizar archivos CSV y Excel en segundos.</p>
+                <h3 class="text-xl font-bold mb-3">Cómo hacerlo</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">Exporta tus resultados como .CSV. Súbelos al chat y usa un prompt analítico.</p>
+                <div class="bg-blue-50 border border-blue-100 p-6 rounded-2xl">
+                    <h4 class="font-semibold text-blue-900 mb-2">Prompt de Ejemplo</h4>
+                    <code class="text-sm text-blue-800 font-mono block">"Analiza este archivo CSV de una encuesta sobre hábitos de estudio. Genera un reporte identificando las 3 tendencias más importantes y dame ideas de gráficos para la presentación final."</code>
+                </div>
+            `,
+            etica: `
+                <div class="w-16 h-16 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-6">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <h2 class="text-3xl font-bold title-font mb-4">Módulo 3: Uso Ético y Citas Académicas</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">Las universidades en Bucaramanga están implementando detectores de IA. La solución no es ocultarlo, sino usar la IA como asistente y citarla correctamente.</p>
+                <h3 class="text-xl font-bold mb-3">Normas APA 7ma Edición</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">APA ya tiene reglas oficiales para citar a ChatGPT: <br><br><b>Formato en el texto:</b> (OpenAI, 2023)<br><b>Referencia:</b> OpenAI. (2023). ChatGPT (versión del 14 de marzo) [Modelo de lenguaje grande]. https://chat.openai.com/chat</p>
+            `
+        };
+
+        function showLesson(id) {
+            document.getElementById('lesson-content').innerHTML = lessons[id];
+            
+            // Actualizar UI de los tabs
+            const tabs = document.querySelectorAll('.cursor-pointer');
+            tabs.forEach(t => {
+                t.classList.remove('border-purple-500', 'border-blue-500', 'border-red-500');
+                t.classList.add('border-transparent');
+            });
+            
+            const activeTab = event.currentTarget;
+            if(id === 'tesis') activeTab.classList.replace('border-transparent', 'border-purple-500');
+            if(id === 'datos') activeTab.classList.replace('border-transparent', 'border-blue-500');
+            if(id === 'etica') activeTab.classList.replace('border-transparent', 'border-red-500');
+        }
+    </script>
+</body>
+</html>

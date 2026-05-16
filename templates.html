@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantillas Pro - Kit IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">AI</div>
+            <span class="title-font text-xl font-semibold">Kit IA</span>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-home w-5"></i> Inicio
+            </a>
+            <p class="px-4 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Herramientas Pro</p>
+            <a href="prompt-tester.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-flask w-5 text-blue-400"></i> Medidor de Prompts
+            </a>
+            <a href="guides.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-book w-5 text-purple-400"></i> Librería de Guías
+            </a>
+            <a href="templates.html" class="flex items-center gap-3 px-4 py-3 bg-gray-800 text-white rounded-xl transition">
+                <i class="fas fa-copy w-5 text-green-400"></i> Plantillas Pro
+            </a>
+            <a href="plagiarism.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-gavel w-5 text-amber-400"></i> Revisor Anti-Plagio
+            </a>
+            <a href="learn-ai.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-brain w-5 text-emerald-400"></i> Aprender con IA
+            </a>
+            <a href="gemini-tutor.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl transition">
+                <i class="fas fa-robot w-5 text-pink-400"></i> IA Tutor
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+            <h1 class="text-2xl font-semibold title-font">Plantillas y Prompts Pro</h1>
+            <span id="user-display" class="text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full"></span>
+        </header>
+
+        <div class="p-8 max-w-6xl mx-auto w-full">
+            <p class="text-gray-500 mb-8 max-w-2xl">Copia estas plantillas probadas directamente a tu herramienta de IA favorita. Todas siguen la estructura CREATE para garantizar la mejor respuesta posible.</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Plantilla 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                    <div class="p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-4 text-green-600">
+                            <i class="fas fa-vial text-xl"></i>
+                            <h3 class="font-bold">Estructura de Ensayo</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Genera un esqueleto robusto para un ensayo argumentativo.</p>
+                        <div class="bg-gray-50 p-4 rounded-xl text-xs font-mono text-gray-600 h-32 overflow-y-auto border border-gray-200">
+Actúa como un profesor universitario exigente. Voy a escribir un ensayo sobre [TEMA]. 
+Necesito que me des una estructura detallada que incluya:
+1. Gancho e Introducción.
+2. Tres argumentos principales con sugerencias de evidencia.
+3. Un contraargumento y su refutación.
+4. Conclusión fuerte.
+Solo dame el esquema en viñetas, sin escribir el ensayo por mí.
+                        </div>
+                    </div>
+                    <button onclick="copiar(this)" class="w-full py-4 bg-gray-50 hover:bg-green-50 text-green-600 font-medium border-t transition">
+                        <i class="fas fa-copy"></i> Copiar Prompt
+                    </button>
+                </div>
+
+                <!-- Plantilla 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                    <div class="p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-4 text-purple-600">
+                            <i class="fas fa-language text-xl"></i>
+                            <h3 class="font-bold">Mejora de Redacción</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Sube el nivel académico de un texto que ya escribiste.</p>
+                        <div class="bg-gray-50 p-4 rounded-xl text-xs font-mono text-gray-600 h-32 overflow-y-auto border border-gray-200">
+Actúa como un editor académico de una revista científica.
+Voy a proporcionarte un texto escrito por mí. Quiero que mejores su fluidez, elimines la redundancia y eleves el registro a un lenguaje formal universitario.
+MANTÉN estrictamente mis ideas originales.
+Texto: [PEGA TU TEXTO AQUÍ]
+                        </div>
+                    </div>
+                    <button onclick="copiar(this)" class="w-full py-4 bg-gray-50 hover:bg-purple-50 text-purple-600 font-medium border-t transition">
+                        <i class="fas fa-copy"></i> Copiar Prompt
+                    </button>
+                </div>
+
+                <!-- Plantilla 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                    <div class="p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-4 text-blue-600">
+                            <i class="fas fa-question-circle text-xl"></i>
+                            <h3 class="font-bold">Simulador de Sustentación</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Prepárate para preguntas difíciles de los jurados.</p>
+                        <div class="bg-gray-50 p-4 rounded-xl text-xs font-mono text-gray-600 h-32 overflow-y-auto border border-gray-200">
+Asume el rol de un jurado evaluador escéptico de mi proyecto de grado. 
+Mi tema es: [TEMA]. 
+Hazme 5 preguntas difíciles que podrían hacerme en la sustentación oral, enfocándote en debilidades metodológicas o falta de evidencia. 
+Entrégame las preguntas una por una, y espera a que yo responda la primera para retroalimentarme.
+                        </div>
+                    </div>
+                    <button onclick="copiar(this)" class="w-full py-4 bg-gray-50 hover:bg-blue-50 text-blue-600 font-medium border-t transition">
+                        <i class="fas fa-copy"></i> Copiar Prompt
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requireAuth(['premium', 'admin']);
+        });
+
+        function copiar(btn) {
+            const textToCopy = btn.previousElementSibling.querySelector('.font-mono').innerText;
+            navigator.clipboard.writeText(textToCopy);
+            
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-check"></i> ¡Copiado!`;
+            btn.classList.add('bg-gray-200');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.classList.remove('bg-gray-200');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

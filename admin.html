@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Kit IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+        .tab-active { border-bottom: 2px solid #2563eb; color: #2563eb; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <nav class="bg-gray-900 border-b border-gray-800 py-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-white">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-red-600 rounded-2xl flex items-center justify-center font-bold text-2xl">
+                    <i class="fas fa-shield-alt text-lg"></i>
+                </div>
+                <span class="title-font text-2xl font-semibold tracking-tighter">Panel Administrativo</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="user-display" class="text-sm font-medium bg-gray-800 px-4 py-2 rounded-full"></span>
+                <button id="logout-btn" class="text-sm font-medium text-red-400 hover:text-red-300"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 p-8 max-w-5xl mx-auto w-full">
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-3xl font-bold title-font text-gray-900 mb-2">Gestión General</h1>
+                <p class="text-gray-500">Administra los usuarios registrados y genera Gift Cards (Códigos).</p>
+            </div>
+            <button onclick="document.getElementById('new-code-modal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition shadow-sm flex items-center gap-2">
+                <i class="fas fa-ticket-alt"></i> Generar Gift Card
+            </button>
+        </div>
+
+        <!-- TABS -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <button onclick="switchTab('users')" id="tab-users" class="px-6 py-3 text-sm font-medium transition tab-active">Usuarios Registrados</button>
+            <button onclick="switchTab('codes')" id="tab-codes" class="px-6 py-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition">Códigos de Regalo</button>
+            <button onclick="switchTab('config')" id="tab-config" class="px-6 py-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition">Configuración Global</button>
+        </div>
+
+        <!-- Tabla de usuarios -->
+        <div id="view-users" class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
+                            <th class="p-4 font-medium">Nombre</th>
+                            <th class="p-4 font-medium">Email</th>
+                            <th class="p-4 font-medium">Tipo Actual</th>
+                            <th class="p-4 font-medium">Estado</th>
+                            <th class="p-4 font-medium">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body" class="text-sm text-gray-700 divide-y divide-gray-100">
+                        <!-- Generado por JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tabla de Códigos -->
+        <div id="view-codes" class="hidden bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
+                            <th class="p-4 font-medium">Código</th>
+                            <th class="p-4 font-medium">Beneficio</th>
+                            <th class="p-4 font-medium">Estado</th>
+                            <th class="p-4 font-medium">Canjeado Por</th>
+                        </tr>
+                    </thead>
+                    <tbody id="codes-table-body" class="text-sm text-gray-700 divide-y divide-gray-100">
+                        <!-- Generado por JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tabla de Configuración -->
+        <div id="view-config" class="hidden bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold mb-4">Configuración de Integraciones</h2>
+            <form id="config-form" class="max-w-md space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">API Key de Google Gemini</label>
+                    <input type="password" id="gemini-api" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500" placeholder="AIzaSy...">
+                    <p class="text-xs text-gray-500 mt-2">Esta llave permitirá que el módulo de "Tutor IA" funcione.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Modelo de Gemini</label>
+                    <input type="text" id="gemini-model" class="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: gemini-pro">
+                    <p class="text-xs text-gray-500 mt-2">Escribe el modelo exacto al que tienes acceso (ej: <code>gemini-pro</code>, <code>gemini-1.5-flash</code>).</p>
+                </div>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition">Guardar Configuración</button>
+            </form>
+            <p id="config-msg" class="mt-3 text-sm text-green-600 font-medium hidden"><i class="fas fa-check"></i> ¡Guardado con éxito!</p>
+        </div>
+    </main>
+
+    <!-- Modal Generar Código -->
+    <div id="new-code-modal" class="fixed inset-0 bg-gray-900/50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-8 rounded-3xl w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold title-font">Generar Gift Card</h3>
+                <button onclick="document.getElementById('new-code-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="new-code-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Plan a Otorgar</label>
+                    <select id="code-type" class="w-full p-3 rounded-xl border border-gray-300 outline-none focus:border-blue-500">
+                        <option value="premium">Premium (Suscripción)</option>
+                        <option value="package_pdf1">Paquete Individual (Guía Prompts PDF)</option>
+                        <option value="package_docx1">Paquete Individual (Plantillas DOCX)</option>
+                    </select>
+                </div>
+                <div class="pt-2">
+                    <p class="text-xs text-gray-500">Este código se guardará en la lista y podrás enviárselo al cliente para que lo canjee en su Panel.</p>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium mt-4 transition">Generar Ahora</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requireAuth(['admin']);
+            renderTables();
+        });
+
+        function switchTab(tab) {
+            document.getElementById('tab-users').className = "px-6 py-3 text-sm font-medium transition " + (tab === 'users' ? 'tab-active' : 'text-gray-500 hover:text-gray-700');
+            document.getElementById('tab-codes').className = "px-6 py-3 text-sm font-medium transition " + (tab === 'codes' ? 'tab-active' : 'text-gray-500 hover:text-gray-700');
+            document.getElementById('tab-config').className = "px-6 py-3 text-sm font-medium transition " + (tab === 'config' ? 'tab-active' : 'text-gray-500 hover:text-gray-700');
+            
+            document.getElementById('view-users').classList.toggle('hidden', tab !== 'users');
+            document.getElementById('view-codes').classList.toggle('hidden', tab !== 'codes');
+            document.getElementById('view-config').classList.toggle('hidden', tab !== 'config');
+
+            if (tab === 'config') {
+                const config = getApiConfig();
+                document.getElementById('gemini-api').value = config.key;
+                document.getElementById('gemini-model').value = config.model;
+            }
+        }
+
+        function renderTables() {
+            const db = getDB();
+            
+            // Render Users
+            const uBody = document.getElementById('users-table-body');
+            uBody.innerHTML = '';
+            db.users.forEach(user => {
+                const typeColor = user.type === 'admin' ? 'bg-purple-100 text-purple-700' :
+                                  user.type === 'premium' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700';
+                
+                const statusColor = user.status === 'active' ? 'bg-green-500' : 'bg-red-500';
+                const statusText = user.status === 'active' ? 'Activo' : 'Suspendido';
+                const actionBtn = user.status === 'active' ? 
+                    `<button onclick="toggleStatus('${user.email}', 'suspended')" class="text-amber-500 hover:text-amber-700" title="Suspender"><i class="fas fa-ban"></i></button>` :
+                    `<button onclick="toggleStatus('${user.email}', 'active')" class="text-green-500 hover:text-green-700" title="Activar"><i class="fas fa-check"></i></button>`;
+
+                uBody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-4 font-medium">${user.name}</td>
+                        <td class="p-4 text-gray-500">${user.email}</td>
+                        <td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${typeColor}">${user.type.toUpperCase()}</span></td>
+                        <td class="p-4 flex items-center gap-2 mt-2"><div class="w-2 h-2 rounded-full ${statusColor}"></div> <span class="text-xs text-gray-500">${statusText}</span></td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                ${user.type !== 'admin' ? actionBtn : ''}
+                                ${user.type !== 'admin' ? `<button onclick="borrarUsuario('${user.email}')" class="text-red-500 hover:text-red-700" title="Eliminar"><i class="fas fa-trash"></i></button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            // Render Codes
+            const cBody = document.getElementById('codes-table-body');
+            cBody.innerHTML = '';
+            // Mostrar últimos primero
+            db.codes.slice().reverse().forEach(code => {
+                const typeColor = code.type === 'premium' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700';
+                const statusColor = code.used ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700';
+                const statusText = code.used ? 'Canjeado' : 'Disponible';
+
+                cBody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-4 font-mono font-medium">${code.code}</td>
+                        <td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${typeColor}">${code.type.toUpperCase()}</span></td>
+                        <td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${statusText}</span></td>
+                        <td class="p-4 text-gray-500">${code.usedBy || '-'}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        document.getElementById('new-code-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const typeVal = document.getElementById('code-type').value;
+            let newCode;
+            if (typeVal.startsWith('package_')) {
+                const pkgId = typeVal.split('_')[1];
+                newCode = generateCode('package', pkgId);
+            } else {
+                newCode = generateCode(typeVal);
+            }
+            alert(`Código generado: ${newCode}\nSe ha guardado en la tabla de Códigos.`);
+            document.getElementById('new-code-modal').classList.add('hidden');
+            renderTables();
+            switchTab('codes');
+        });
+
+        document.getElementById('config-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const key = document.getElementById('gemini-api').value.trim();
+            const model = document.getElementById('gemini-model').value.trim() || 'gemini-pro';
+            updateApiKey(key, model);
+            const msg = document.getElementById('config-msg');
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        });
+
+        window.toggleStatus = function(email, newStatus) {
+            if(confirm(`¿Estás seguro de cambiar el estado de este usuario a ${newStatus}?`)) {
+                updateUserStatus(email, newStatus);
+                renderTables();
+            }
+        };
+
+        window.borrarUsuario = function(email) {
+            if(confirm('¿ESTÁS SEGURO? Esta acción borrará al usuario permanentemente.')) {
+                deleteUser(email);
+                renderTables();
+            }
+        };
+    </script>
+</body>
+</html>

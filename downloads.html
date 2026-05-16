@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargas - Kit IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <nav class="bg-white border-b py-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">AI</div>
+                <span class="title-font text-2xl font-semibold tracking-tighter">Kit IA - Descargas</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="user-display" class="text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full"></span>
+                <button id="logout-btn" class="text-sm font-medium text-red-500 hover:text-red-700"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 p-8 max-w-5xl mx-auto w-full">
+        <!-- Banner Upgrade -->
+        <div id="upgrade-banner" class="hidden bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 text-white mb-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <h2 class="text-2xl font-bold title-font mb-2">Pásate a Premium</h2>
+                <p class="text-blue-100 max-w-xl">Desbloquea <strong>todos los paquetes actuales y futuros</strong>, además de tener acceso a las herramientas interactivas como el Medidor de Prompts y el Simulador Anti-Plagio.</p>
+            </div>
+            <a href="checkout.html?type=premium" class="bg-white text-blue-700 px-6 py-3 rounded-xl font-bold hover:scale-105 transition shadow-sm whitespace-nowrap">
+                Hacer Upgrade
+            </a>
+        </div>
+
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold title-font mb-2">Tus Paquetes y Descargas</h1>
+            <p class="text-gray-500">Aquí puedes acceder a los paquetes que has comprado o adquirir nuevos.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="packages-container">
+            <!-- Renderizado por JS -->
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Todos pueden ver esta página (marketplace)
+            requireAuth(['free', 'onetime', 'premium', 'admin']);
+            
+            const user = getCurrentUser();
+            if (!user) return;
+
+            // Mostrar banner de upgrade si es free o onetime
+            if (user.type === 'free' || user.type === 'onetime') {
+                document.getElementById('upgrade-banner').classList.remove('hidden');
+            }
+
+            const packages = [
+                { id: 'pdf1', title: 'Guía de Prompts Universitarios', desc: '2.5 MB • PDF', icon: 'fa-file-pdf', color: 'red' },
+                { id: 'docx1', title: 'Plantillas IMRaD Editables', desc: '1.2 MB • DOCX', icon: 'fa-file-word', color: 'blue' },
+                { id: 'zip1', title: 'Biblioteca de +35 Prompts', desc: '500 KB • ZIP', icon: 'fa-folder-open', color: 'amber' }
+            ];
+
+            const container = document.getElementById('packages-container');
+            
+            // Si es onetime/premium/admin de la v2, asume que tiene el bundle antiguo y ve todo
+            const hasBundle = ['onetime', 'premium', 'admin'].includes(user.type);
+            const unlocked = user.unlockedPackages || [];
+
+            packages.forEach(pkg => {
+                const isUnlocked = hasBundle || unlocked.includes(pkg.id);
+                
+                const actionBtn = isUnlocked ? 
+                    `<button onclick="alert('Descargando ${pkg.title} simulado...')" class="w-full mt-4 py-3 bg-green-50 text-green-700 hover:bg-green-100 rounded-xl font-medium transition flex items-center justify-center gap-2">
+                        <i class="fas fa-download"></i> Descargar Archivo
+                    </button>` : 
+                    `<a href="checkout.html?type=package&packageId=${pkg.id}" class="w-full mt-4 py-3 bg-gray-900 text-white hover:bg-gray-800 rounded-xl font-medium transition flex items-center justify-center gap-2">
+                        <i class="fas fa-shopping-cart"></i> Comprar ($10.000)
+                    </a>`;
+
+                const lockIcon = isUnlocked ? '' : `<div class="absolute top-4 right-4 text-gray-300"><i class="fas fa-lock"></i></div>`;
+
+                container.innerHTML += `
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition relative flex flex-col justify-between">
+                        ${lockIcon}
+                        <div>
+                            <div class="w-12 h-12 bg-${pkg.color}-100 text-${pkg.color}-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                                <i class="fas ${pkg.icon}"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-1">${pkg.title}</h3>
+                            <p class="text-sm text-gray-500 mb-2">${pkg.desc}</p>
+                        </div>
+                        ${actionBtn}
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
