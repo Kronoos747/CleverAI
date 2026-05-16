@@ -12,7 +12,7 @@ const defaultDB = {
         { code: "PACK-ABC", type: "package", packageId: "pdf1", used: false, usedBy: null }
     ],
     currentUser: null,
-    geminiApiKey: btoa("AIzaSyB7Z4t_MIh414NJvkdFG4PDlv70dfZGsTQ"), // <--- API KEY ENCODED (Base64)
+    geminiApiKey: "AIzaSyB7Z4t_MIh414NJvkdFG4PDlv70dfZGsTQ", // <--- PEGA TU API KEY AQUÍ ADENTRO DE LAS COMILLAS
     geminiModel: "gemini-2.5-flash" // <--- CAMBIA EL MODELO AQUÍ SI ES NECESARIO (ej: gemini-pro, gemini-1.5-flash)
 };
 
@@ -138,7 +138,7 @@ function getCurrentUser() {
 
 function updateApiKey(key, model) {
     const db = getDB();
-    db.geminiApiKey = btoa(key); // Store encoded
+    db.geminiApiKey = key;
     if (model) db.geminiModel = model;
     saveDB(db);
 }
@@ -146,7 +146,7 @@ function updateApiKey(key, model) {
 function getApiConfig() {
     const db = getDB();
     return {
-        key: db && db.geminiApiKey ? atob(db.geminiApiKey) : "", // Decode when retrieving
+        key: db ? db.geminiApiKey : "",
         model: db && db.geminiModel ? db.geminiModel : "gemini-pro"
     };
 }
