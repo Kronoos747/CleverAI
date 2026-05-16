@@ -12,7 +12,7 @@ const defaultDB = {
         { code: "PACK-ABC", type: "package", packageId: "pdf1", used: false, usedBy: null }
     ],
     currentUser: null,
-    geminiApiKey: "TU_API_KEY_AQUI", // <--- PEGA TU API KEY AQUÍ ADENTRO DE LAS COMILLAS
+    geminiApiKey: "AIzaSyB7Z4t_MIh414NJvkdFG4PDlv70dfZGsTQ", // <--- PEGA TU API KEY AQUÍ ADENTRO DE LAS COMILLAS
     geminiModel: "gemini-2.5-flash" // <--- CAMBIA EL MODELO AQUÍ SI ES NECESARIO (ej: gemini-pro, gemini-1.5-flash)
 };
 
